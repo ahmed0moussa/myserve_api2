@@ -11,9 +11,6 @@ public class Infocandidate {
     @Id
     private String id ;
 
-    @Indexed(name = "entretien")
-    private Entretien entretien;
-
     @Indexed(name = "Phone")
     private String Phone;
 
@@ -52,6 +49,9 @@ public class Infocandidate {
 
     @Indexed(name = "AutredsBoites")
     private String AutredsBoites;
+
+    @Indexed(name = "image")
+    private String image;
 
 
 }

@@ -1,7 +1,10 @@
 package com.myserv.api.rh.auth;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
 
+@RequiredArgsConstructor
 public class JwtResponse {
     private String token;
     private String type = "Bearer";

@@ -8,6 +8,7 @@ import com.myserv.api.rh.model.User;
 import com.myserv.api.rh.repository.RoleRepository;
 import com.myserv.api.rh.repository.UserRepository;
 import com.myserv.api.rh.services.UserDetailsImpl;
+import com.myserv.api.rh.services.UserDetailsServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,7 @@ public class AuthController {
 
     @Autowired
     JwtUtils jwtUtils;
+
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginForm) {
@@ -117,4 +119,6 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
+
 }

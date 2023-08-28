@@ -62,7 +62,7 @@ public class EntretienController {
         return entretienRepository.findBySpecialiteId(specialiteId);
     }
     @PostMapping ("/api/v1/entretien/uploadFile/{entretienId}")
-    public String uploadFile(@PathVariable String entretienId,@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Entretien> uploadFile(@PathVariable String entretienId,@RequestParam("file") MultipartFile file) {
 
         return fileUploadService.uploadFile(entretienId,file);
     }

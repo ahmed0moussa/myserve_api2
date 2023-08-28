@@ -2,6 +2,7 @@ package com.myserv.api.rh.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -18,6 +19,7 @@ import java.util.Date;
 @Data
 @Document()
 @Setter
+@Getter
 public class Entretien {
 
     @Id

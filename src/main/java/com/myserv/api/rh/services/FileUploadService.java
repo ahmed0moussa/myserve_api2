@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,7 @@ public class FileUploadService {
         }
     }
 
-    public String uploadFile(String entretienId,MultipartFile file) {
+    public ResponseEntity<Entretien> uploadFile(String entretienId,MultipartFile file) {
         // Renormalize the file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         Entretien entretien = entretienRepository.findById(entretienId).orElseThrow();
@@ -72,15 +73,15 @@ public class FileUploadService {
 
             String fileUploadUrl= ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/entretien/downloadFile/").path(fileName).toUriString();
             entretien.setFile(fileUploadUrl);
+            entretienRepository.save(entretien);
 
 
 
+                return ResponseEntity.ok(entretien);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(entretien);
+            }
 
-
-            return fileUploadUrl;
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
     }
 
     public ResponseEntity<Resource> downloadFile(String fileName) {
