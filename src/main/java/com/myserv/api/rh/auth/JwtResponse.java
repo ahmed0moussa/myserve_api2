@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-@RequiredArgsConstructor
+
 public class JwtResponse {
     private String token;
     private String type = "Bearer";
@@ -16,7 +16,6 @@ public class JwtResponse {
     public JwtResponse(String token, String id, String email, List<String> roles) {
         this.token = token;
         this.id = id;
-
         this.email = email;
         this.roles = roles;
     }

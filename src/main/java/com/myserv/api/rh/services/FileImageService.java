@@ -25,10 +25,10 @@ import java.nio.file.StandardCopyOption;
 public class FileImageService {
     @Autowired
     private EntretienRepository entretienRepository;
-   private final Path imageUploadLocation;
+    private final Path imageUploadLocation;
     private final Path imageDownloadLocation = Paths.get("./uploads/Image");
 
-   @Autowired
+    @Autowired
     public FileImageService(ImageStorageProperties imageStorageProperties) {
         this.imageUploadLocation = Paths.get(imageStorageProperties.getImageDir())
                 .toAbsolutePath().normalize();
@@ -56,7 +56,7 @@ public class FileImageService {
     public String uploadImage(String infoCanditatId, MultipartFile image) {
         // Renormalize the file name
         String fileName = StringUtils.cleanPath(image.getOriginalFilename());
-       /* Entretien entretien = entretienRepository.findById(entretienId).orElseThrow();*/
+        /* Entretien entretien = entretienRepository.findById(entretienId).orElseThrow();*/
 
         try {
             // Verify if the file's name  is containing invalid characters

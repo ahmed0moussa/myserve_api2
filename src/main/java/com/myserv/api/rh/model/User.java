@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-@Setter
+
 @Data
 @Document()
 public class User {
