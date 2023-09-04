@@ -7,6 +7,7 @@ import com.myserv.api.rh.repository.RoleRepository;
 import com.myserv.api.rh.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -16,7 +17,8 @@ import java.util.Set;
 
 @Service
 public class UserService {
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 @Autowired
     UserRepository userRepository;
 
@@ -27,9 +29,30 @@ private RoleRepository roleRepository;
     public List<User> findAllUsers(){
         return userRepository.findAllUsersExceptAdmin("admin@admin.com");
     }
+    public Optional<User> getById(String idUser){
+        return userRepository.findById(idUser);
+    }
 
     public void deleteById(String id){
           userRepository.deleteById(id);
+    }
+    public User updateUser(String id, User updatedUser) {
+        User existingUser = userRepository.findById(id).orElse(null);
+
+        if (existingUser != null) {
+            // Update the fields you want to change from updatedUser into existingUser
+            existingUser.setFirstName(updatedUser.getFirstName());
+            existingUser.setLastName(updatedUser.getLastName());
+            existingUser.setEmail(updatedUser.getEmail());
+            String newPassword = updatedUser.getPassword();
+            if (newPassword != null && !newPassword.isEmpty()) {
+                // Hash the new password before saving it
+                existingUser.setPassword(passwordEncoder.encode(newPassword));
+            }
+
+        }
+        return userRepository.save(existingUser);
+
     }
     public void createadmine() {
 

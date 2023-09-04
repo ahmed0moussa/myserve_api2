@@ -1,24 +1,28 @@
 package com.myserv.api.rh.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document()
+@Getter
+@Setter
 public class RepenseQRH {
     @Id
     private String id ;
 
-    @Indexed(name = "FrenchLevel")
-    private String FrenchLevel;
+    @Indexed(name = "frenchLevel")
+    private String frenchLevel;
 
-    @Indexed(name = "Englishlevel")
-    private String Englishlevel;
+    @Indexed(name = "englishlevel")
+    private String englishlevel;
 
-    @Indexed(name = "Qualities")
-    private String Qualities;
+    @Indexed(name = "qualities")
+    private String qualities;
 
     @Indexed(name = "Faults")
     private String Faults;

@@ -1,15 +1,20 @@
 package com.myserv.api.rh.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document()
+@Getter
+@Setter
 public class Infocandidate {
     @Id
     private String id ;
+
 
     @Indexed(name = "Phone")
     private String Phone;
@@ -29,8 +34,8 @@ public class Infocandidate {
     @Indexed(name = "Status")
     private String Status;
 
-    @Indexed(name = "Diploma")
-    private String Diploma ;
+    @Indexed(name = "Diplome")
+    private String Diplome ;
 
     @Indexed(name = "YearsOfExperience")
     private Number YearsOfExperience;

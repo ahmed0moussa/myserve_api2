@@ -2,8 +2,12 @@ package com.myserv.api.rh.services;
 
 import com.myserv.api.rh.configfile.FileStorageProperties;
 import com.myserv.api.rh.configfile.ImageStorageProperties;
+import com.myserv.api.rh.model.CompteRendu;
 import com.myserv.api.rh.model.Entretien;
+import com.myserv.api.rh.model.Infocandidate;
+import com.myserv.api.rh.repository.CompteRenduRepository;
 import com.myserv.api.rh.repository.EntretienRepository;
+import com.myserv.api.rh.repository.InfocandidateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -24,7 +28,12 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class FileImageService {
     @Autowired
-    private EntretienRepository entretienRepository;
+    private CompteRenduService compteRenduService;
+    @Autowired
+    private CompteRenduRepository compteRenduRepository;
+    @Autowired
+    private InfocandidateRepository infocandidateRepository;
+
     private final Path imageUploadLocation;
     private final Path imageDownloadLocation = Paths.get("./uploads/Image");
 
@@ -53,7 +62,10 @@ public class FileImageService {
         }
     }
 
-    public String uploadImage(String infoCanditatId, MultipartFile image) {
+    public ResponseEntity<CompteRendu>  uploadImage(String entretienId, MultipartFile image) {
+        CompteRendu compteRendu=compteRenduService.getByIdEntretien(entretienId);
+        Infocandidate infocandidate=compteRendu.getInfocandidate();
+
         // Renormalize the file name
         String fileName = StringUtils.cleanPath(image.getOriginalFilename());
         /* Entretien entretien = entretienRepository.findById(entretienId).orElseThrow();*/
@@ -68,14 +80,19 @@ public class FileImageService {
 
             Files.copy(image.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            String imageUploadUrl= ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/entretien/downloadFile/").path(fileName).toUriString();
-            /*entretien.setFile(imageUploadUrl);*/
+            String imageUploadUrl= ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/v1/compterendu/downloadFile/").path(fileName).toUriString();
+
+            infocandidate.setImage(imageUploadUrl);
+            compteRendu.setInfocandidate(infocandidate);
+            infocandidateRepository.save(infocandidate);
+            compteRenduRepository.save(compteRendu);
 
 
 
 
 
-            return imageUploadUrl;
+
+            return ResponseEntity.ok(compteRendu);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

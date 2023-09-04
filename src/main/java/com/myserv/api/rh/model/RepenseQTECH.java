@@ -16,4 +16,6 @@ public class RepenseQTECH {
 
     @Indexed(name = "TextRepense")
     private String TextRepense;
+
+
 }
