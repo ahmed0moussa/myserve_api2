@@ -1,6 +1,7 @@
 package com.myserv.api.rh.controller;
 
 import com.myserv.api.rh.model.User;
+import com.myserv.api.rh.model.UserDTO;
 import com.myserv.api.rh.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class UserController {
     private  UserService userService;
 
     @GetMapping("/api/users/all")
-    public List<User> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
         return this.userService.findAllUsers();
     }
 
@@ -27,7 +28,7 @@ public class UserController {
         this.userService.deleteById(id);
     }
     @GetMapping("/api/users/{id}")
-    public Optional<User> getById(@PathVariable String id) {
+    public Optional<UserDTO> getById(@PathVariable String id) {
         return  this.userService.getById(id);
     }
     @PutMapping("/api/users/{id}")
